@@ -1,0 +1,17 @@
+<div>
+    <form [formGroup]="formulaireAjouterEnfants">
+    <div>
+        <h2> Enfants </h2>
+        <button type="submit" (click)="onSubmitForm()"> Ajouter un enfant </button>
+    </div>
+        <div>
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" formControlName="nom">
+        </div>
+        <div>
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" formControlName="prenom">
+        </div>
+    </form>
+</div>
+
