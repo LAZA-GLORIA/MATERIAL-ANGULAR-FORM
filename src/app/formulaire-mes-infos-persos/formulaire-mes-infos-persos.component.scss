@@ -1,0 +1,19 @@
+
+    h2 {
+        padding-left: 2rem;
+    }
+
+form {
+    padding-left: 5rem;
+
+    .genre-nom-prenom-container {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .nir-email-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+}

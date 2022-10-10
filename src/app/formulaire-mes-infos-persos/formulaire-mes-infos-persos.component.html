@@ -1,4 +1,83 @@
-<div>
+<h2> Mes infos persos </h2>
+<form [formGroup]="options">
+
+    <div class="genre-nom-prenom-container">
+        <div>
+            <p> Genre </p>
+            <mat-form-field appearance="fill">
+            <mat-label>Genre</mat-label>
+            <mat-select [formControl]="genreControl">
+                <mat-option value="homme">Homme</mat-option>
+                <mat-option value="femme">Femme</mat-option>
+              </mat-select>
+        </mat-form-field>
+        </div>
+    
+        <div>
+        <p> Nom </p>
+        <mat-form-field appearance="fill">
+            <mat-label>Nom</mat-label>
+            <input matInput #input maxlength="50" [formControl]="nomControl">
+            <mat-hint align="end">Caractères restants {{input.value.length || 0}}/50</mat-hint>
+        </mat-form-field>
+        </div>
+    
+        <div>
+        <p> Prenom </p>
+        <mat-form-field appearance="fill">
+            <mat-label>Prenom</mat-label>
+            <input matInput #input maxlength="50" [formControl]="prenomControl">
+            <mat-hint align="end">Caractères restants {{input.value.length || 0}}/50</mat-hint>
+        </mat-form-field>
+        </div>
+    </div>
+
+    <div class="nir-email-container">
+        <div>
+            <p> NIR </p>
+            <mat-form-field appearance="fill">
+                <mat-label>NIR</mat-label>
+                <input matInput [formControl]="nirControl">
+            </mat-form-field>
+            </div>
+        
+            <div>
+            <p> Adresse mail </p>
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput [formControl]="emailControl" [errorStateMatcher]="matcher"
+                       placeholder="Ex. pat@example.com">
+                <mat-hint>Errors appear instantly!</mat-hint>
+                <mat-error *ngIf="emailControl.hasError('email') && !emailControl.hasError('required')">
+                  Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="emailControl.hasError('required')">
+                  Email is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            </div>
+    </div>
+
+    <div class="pays-vistes-container">
+        <p> Pays visités </p>
+    <mat-form-field appearance="fill" [color]="paysVisitesControl.value">
+        <input type="text"
+        placeholder="Selectionnez le pays"
+        aria-label="Pays"
+        matInput
+        [formControl]="paysVisitesControl"
+        [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let element of paysVisites" [value]="element">
+                    {{element}}
+                </mat-option>
+            </mat-autocomplete>
+    </mat-form-field>
+    </div>
+
+</form>
+
+<!-- <div>
     <h2> Mes Infos Persos </h2>
     <form [formGroup]="formulaireInfosPersos">
         <div>
@@ -13,4 +92,4 @@
             <button type="submit" (click)="onSubmitForm()"> VALIDER </button>
         </div>
     </form>
-</div>
+</div> -->
