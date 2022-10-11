@@ -5,6 +5,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { PaysVisites } from '../models/pays-vistes.model';
 import { PaysVisitesService } from '../services/pays-visites-services';
+import { map, Observable, startWith } from 'rxjs';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -27,7 +28,7 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
   paysVisites: PaysVisites[] = [];
- // filteredPaysVisites$!: Observable<PaysVisites[]>;
+  filteredPaysVisites$!: Observable<PaysVisites[]>;
 
   genreControl = new FormControl(null, [Validators.required]);
   nomControl = new FormControl(null, [Validators.required]);
@@ -52,6 +53,10 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
 
   ngOnInit(): void {  
     this.paysVisites = this.paysVisitesService.getAllPaysVisites();
+    this.filteredPaysVisites$ = this.paysVisitesControl.valueChanges.pipe(
+      startWith(''),
+      map((value) => value ? this.filter(value) : this.paysVisites.slice())
+    )
   }
 
   add(event: MatChipInputEvent): void {
@@ -74,31 +79,15 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
     }
   }
 
-  // getAllPaysVisites() {
-  //   return this.paysVisitesControl.valueChanges.pipe(
-  //     map(value => value.map((item: PaysVisites) => item['name']))
-  //   );
-  // }
+  filter(value: PaysVisites) {
+    const filtervalue=value.name.toLowerCase();
+    return this.paysVisites.filter(
+      (element) => element.name.toLowerCase().indexOf(filtervalue) === 0
+      );
+  }
 
 }
 
-
-
-
-  // ngOnInit(): void {
-  //   this.formulaireInfosPersos = this.formBuilder.group({
-  //     genre: [null],
-  //     nom: [null],
-  //     prenom: [null],
-  //     nir: [null],
-  //     adresseEmail: [null],
-  //     paysVisite: [null]
-  //   });
-  // }
-
-  // onSubmitForm(): void {
-  //   console.log(this.formulaireInfosPersos.value);
-  // }
 
 
 
