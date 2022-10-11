@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -6,6 +6,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { PaysVisites } from '../models/pays-vistes.model';
 import { PaysVisitesService } from '../services/pays-visites-services';
 import { map, Observable, startWith } from 'rxjs';
+import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -24,9 +25,12 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class FormulaireMesInfosPersosComponent implements OnInit{
   //formulaireInfosPersos!: FormGroup;
 
+  visible = true;
+  selectable = true;
+  removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-
+  paysPlaceholder: PaysVisites[] = [];
   paysVisites: PaysVisites[] = [];
   filteredPaysVisites$!: Observable<PaysVisites[]>;
 
@@ -49,6 +53,10 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
 
   matcher = new MyErrorStateMatcher();
 
+  @ViewChild('paysVisitesInput', { static: false })
+  paysVisitesInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('auto', { static: false }) matAutocomplete!: MatAutocomplete;
+
   constructor(private formBuilder: FormBuilder, private paysVisitesService: PaysVisitesService) { }
 
   ngOnInit(): void {  
@@ -60,7 +68,13 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
   }
 
   add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
+    //const value = (event.value || '').trim();
+
+    // Add fruit only when MatAutocomplete is not open
+    // To make sure this does not conflict with OptionSelected Event
+    if (!this.matAutocomplete.isOpen) {
+      const input = event.input;
+      const value = event.value;
 
     // Add our fruit
     if (value) {
@@ -68,15 +82,29 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
     }
 
     // Clear the input value
-    event.chipInput!.clear();
+    //event.chipInput!.clear();
+
+     // Reset the input value
+     if (input) {
+      input.value = '';
+    }
+
+    this.paysVisitesControl.setValue(null);
   }
+}
 
   remove(element: PaysVisites): void {
-    const index = this.paysVisites.indexOf(element);
+    const index = this.paysPlaceholder.indexOf(element);
 
     if (index >= 0) {
-      this.paysVisites.splice(index, 1);
+      this.paysPlaceholder.splice(index, 1);
     }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.paysPlaceholder.push(event.option.viewValue);
+    this.paysVisitesInput.nativeElement.value = '';
+    this.paysVisitesControl.setValue(null);
   }
 
   filter(value: PaysVisites) {
