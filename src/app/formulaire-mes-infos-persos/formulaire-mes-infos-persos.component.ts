@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { Observable } from 'rxjs';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { PaysVisites } from '../models/pays-vistes.model';
+import { PaysVisitesService } from '../services/pays-visites-services';
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -17,11 +20,14 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './formulaire-mes-infos-persos.component.html',
   styleUrls: ['./formulaire-mes-infos-persos.component.scss']
 })
-export class FormulaireMesInfosPersosComponent{
+export class FormulaireMesInfosPersosComponent implements OnInit{
   //formulaireInfosPersos!: FormGroup;
 
-  paysVisites: string[] = [];
-  filteredPaysVisites$!: Observable<string[]>;
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+
+  paysVisites: PaysVisites[] = [];
+ // filteredPaysVisites$!: Observable<PaysVisites[]>;
 
   genreControl = new FormControl(null, [Validators.required]);
   nomControl = new FormControl(null, [Validators.required]);
@@ -30,6 +36,7 @@ export class FormulaireMesInfosPersosComponent{
   emailControl = new FormControl(null, [Validators.required, Validators.email]);
   paysVisitesControl = new FormControl();
 
+  //userForm
   options = this.formBuilder.group({
       genre: this.genreControl,
       nom: this.nomControl,
@@ -41,7 +48,42 @@ export class FormulaireMesInfosPersosComponent{
 
   matcher = new MyErrorStateMatcher();
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private paysVisitesService: PaysVisitesService) { }
+
+  ngOnInit(): void {  
+    this.paysVisites = this.paysVisitesService.getAllPaysVisites();
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our fruit
+    if (value) {
+      this.paysVisites.push({name: value});
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+  }
+
+  remove(element: PaysVisites): void {
+    const index = this.paysVisites.indexOf(element);
+
+    if (index >= 0) {
+      this.paysVisites.splice(index, 1);
+    }
+  }
+
+  // getAllPaysVisites() {
+  //   return this.paysVisitesControl.valueChanges.pipe(
+  //     map(value => value.map((item: PaysVisites) => item['name']))
+  //   );
+  // }
+
+}
+
+
+
 
   // ngOnInit(): void {
   //   this.formulaireInfosPersos = this.formBuilder.group({
@@ -58,4 +100,5 @@ export class FormulaireMesInfosPersosComponent{
   //   console.log(this.formulaireInfosPersos.value);
   // }
 
-}
+
+

@@ -1,4 +1,4 @@
 export interface PaysVisites {
-    letter: string,
-    names: string[],
+   // id: number,
+    name: string,
 }

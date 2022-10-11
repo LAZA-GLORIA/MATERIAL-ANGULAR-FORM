@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import { MatSliderModule } from '@angular/material/slider';
 import { ButtonOverviewExampleComponent } from './button-overview-example/button-overview-example.component';
-import { MaterialExampleModule } from 'src/material.module';
+import { MaterialExampleModule } from 'src/app/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormulaireComponent } from './formulaire/formulaire.component';
 import { PageAccueilComponent } from './page-accueil/page-accueil.component';

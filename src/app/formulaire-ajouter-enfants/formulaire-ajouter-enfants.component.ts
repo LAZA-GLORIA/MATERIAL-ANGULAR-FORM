@@ -21,6 +21,9 @@ export class FormulaireAjouterEnfantsComponent {
 
   constructor(private formBuilder: FormBuilder) { }
 
+  onSupprimerEnfant(){
+    console.log("hello");
+  }
   // ngOnInit(): void {
   //   this.formulaireAjouterEnfants = this.formBuilder.group({
   //     genre: [null],

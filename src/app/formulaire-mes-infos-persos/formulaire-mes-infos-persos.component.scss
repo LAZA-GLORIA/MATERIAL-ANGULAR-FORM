@@ -1,19 +1,44 @@
 
     h2 {
         padding-left: 2rem;
+        padding-top: 5rem;
+        padding-bottom: 2rem;
     }
 
 form {
-    padding-left: 5rem;
+    padding-left: 6rem;
 
-    .genre-nom-prenom-container {
-        display: flex;
-        justify-content: space-between;
+    mat-form-field {
+        padding: 0 0 0 0;
     }
-    
-    .nir-email-container {
-        display: flex;
-        justify-content: space-between;
+
+.genre-nom-prenom-container {
+    display: flex;
+
+    .div-genre {
+        margin-right:  5rem;  
+            
+    }
+
+    .div-nom {
+        margin-right:  5rem;      
     }
 
 }
+
+.nir-email-container {
+    display: flex;
+  
+    .div-nir {
+        margin-right:  10rem;      
+    }
+
+}
+.pays-visites-container {
+
+
+}
+    
+} 
+
+

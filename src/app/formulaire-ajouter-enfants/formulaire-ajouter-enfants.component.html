@@ -1,27 +1,43 @@
 <form [formGroup]="options">
-    <div class="example-button-row">
-        <h2> Enfants </h2> 
-        <button mat-raised-button color="primary"> Ajouter un enfant </button>
+    
+        <div class="titre-ajout-enfant">
+            <h2> Enfants </h2> 
+            <button mat-flat-button color="primary"> Ajouter un enfant </button>
+        </div>
+    <div class="ajout-enfant-container">
+        <div class="div-ajout-genre-enfant">
+            <p> Genre </p>
+            <mat-form-field appearance="fill" [color]="genreControl.value">
+                <mat-label>Genre</mat-label>
+                <mat-select [formControl]="genreControl">
+                    <mat-option value="homme">Homme</mat-option>
+                    <mat-option value="femme">Femme</mat-option>
+                  </mat-select>
+            </mat-form-field>
+        </div>
+        
+    
+        <div class="div-ajout-nom-enfant">
+            <p> Nom </p>
+            <mat-form-field appearance="fill">
+                <mat-label>Nom</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
+    
+        <div class="div-ajout-prenom-enfant">
+            <p> Prénom </p>
+            <mat-form-field appearance="fill">
+                <mat-label>Prénom</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
+    
+        <div class="div-button-supprimer-enfant">
+            <button mat-flat-button color="warn" (click)="onSupprimerEnfant()">Supprimer</button>
+        </div>
+        
     </div>
-    <mat-form-field appearance="fill" [color]="genreControl.value">
-        <mat-label>Genre</mat-label>
-        <mat-select [formControl]="genreControl">
-            <mat-option value="homme">Homme</mat-option>
-            <mat-option value="femme">Femme</mat-option>
-          </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-        <mat-label>Nom</mat-label>
-        <input matInput>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-        <mat-label>Prenom</mat-label>
-        <input matInput>
-    </mat-form-field>
-
-    <button mat-raised-button color="warn">Supprimer</button>
 
 </form>
 
