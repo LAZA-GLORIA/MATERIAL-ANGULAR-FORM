@@ -33,13 +33,30 @@
     </div>
 
     <div class="nir-email-container">
+        <p> NIR </p>
         <div class="container-nir">
-            <p> NIR </p>
+           <div class="div-nir">
             <mat-form-field appearance="fill">
                 <mat-label>NIR</mat-label>
-                <input matInput type="text">
+                <input matInput type="text" [formControl]="nirControl">
+
+                <div class="field-message" *ngIf="nirControl.errors?.['nirStrength']">
+                    Your password must have lower case, upper case and numeric characters.
+                </div>
             </mat-form-field>
-            </div>
+           </div>
+
+           <div div="cle-nir">
+            <mat-form-field appearance="fill">
+                <mat-label>clé</mat-label>
+                <input matInput type="text" [formControl]="CleNirControl">
+
+                <div class="field-message" *ngIf="CleNirControl.errors?.['cleNirStrength']">
+                    Votre cle est fausse
+                </div>
+            </mat-form-field>
+           </div>
+        </div>
         
             <div class="div-email">
             <p> Adresse mail </p>

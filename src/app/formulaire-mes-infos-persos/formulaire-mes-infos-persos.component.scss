@@ -31,10 +31,14 @@ form {
   
     .container-nir {
         margin-right:  10rem;  
+        display: flex;
+        align-items: flex-end;
         .div-nir {
-            display: flex;
-            justify-content: space-between;
-        }    
+            margin-right: 1rem;
+        } 
+        .div-clenir {
+            width: 2rem;
+        }   
     }
 
 }

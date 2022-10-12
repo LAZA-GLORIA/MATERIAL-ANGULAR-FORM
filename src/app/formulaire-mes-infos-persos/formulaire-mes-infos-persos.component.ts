@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroupDirective, NgForm, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ErrorStateMatcher } from '@angular/material/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
@@ -32,6 +32,8 @@ export class FormulaireMesInfosPersosComponent {
   paysVisites: string[] = ["France", "Allemagne", "Pays-Bas", "Danemark", "Italie"];
   filteredPaysVisites$!: Observable<string[]>;
 
+  nirControl = new FormControl(null, [Validators.required, Validators.maxLength(8), methodeNirValidator()]);
+  CleNirControl = new FormControl(null, [Validators.required,Validators.maxLength(2), methodeCleNirValidator()]);
   emailControl = new FormControl(null, [Validators.required, Validators.email]);
   paysVisitesControl = new FormControl();
 
@@ -40,8 +42,10 @@ export class FormulaireMesInfosPersosComponent {
       genre: [null, [Validators.required]],
       nom: [null, [Validators.required]],
       prenom: [null, [Validators.required]],
-      nir: [null, [Validators.required]],
-      cleNir: [null, [Validators.required]],
+      //nir: [null, [Validators.required, methodeNirValidator()]],
+      nir: this.nirControl,
+      //cleNir: [null, [Validators.required]],
+      cleNir: this.CleNirControl,
       email: this.emailControl,
       paysVisites: this.paysVisitesControl
   });
@@ -113,7 +117,51 @@ export class FormulaireMesInfosPersosComponent {
       );
   }
 
+  //parametre cle, booleen si cle valide avec equation 
+
 }
 
+{
+  nirStrength: {
+    hasLength: true
+    hasNumeric: false
+  }
+}
 
+{
+  cleNirStrength: {
+    hasNumeriCle: false
+  }
+}
+
+function methodeNirValidator(): ValidatorFn {
+  return (control:AbstractControl) : ValidationErrors | null => {
+    const value = control.value;
+    if (!value) return null;
+
+    const hasNumeric = /[1-97]+/.test(value);
+    const hasLength = /[value.length <= 8]+/.test(value);
+
+    const nirValide = hasNumeric && hasLength;
+
+    return !nirValide ? {nirStrength:true}: null;
+
+  }
+}
+
+  function methodeCleNirValidator(): ValidatorFn {
+    return (control:AbstractControl) : ValidationErrors | null => {
+      const value = control.value;
+      if (!value) {
+        return null;
+      }
+     // const hasNumeriCle = /[97 - (this.hasNumeric)%97)]+/.test(value);
+     const hasNumeriCle = /[0-1]/.test(value);
+  
+      const CleNirValide = hasNumeriCle;
+  
+      return !CleNirValide ? {cleNirStrength:true}: null;
+  
+    }
+}
 
