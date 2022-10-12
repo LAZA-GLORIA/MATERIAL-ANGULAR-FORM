@@ -37,7 +37,7 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
   genreControl = new FormControl(null, [Validators.required]);
   nomControl = new FormControl(null, [Validators.required]);
   prenomControl = new FormControl(null, [Validators.required]);
-  nirControl = new FormControl(null, [Validators.required]);
+  nirControl = new FormControl(null, [Validators.required, Validators.pattern('[01-97]$')]);
   emailControl = new FormControl(null, [Validators.required, Validators.email]);
   paysVisitesControl = new FormControl();
 
@@ -57,14 +57,17 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
   paysVisitesInput!: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete!: MatAutocomplete;
 
-  constructor(private formBuilder: FormBuilder, private paysVisitesService: PaysVisitesService) { }
+  constructor(private formBuilder: FormBuilder, private paysVisitesService: PaysVisitesService) { 
+    this.filteredPaysVisites$ = this.paysVisitesControl.valueChanges.pipe(
+      startWith(''),
+      map((value: PaysVisites) => value ? this.filter(value) : this.paysVisites.slice())
+      //map((value) => value ? this.filter(value) : this.paysVisites.slice())
+    );
+  }
 
   ngOnInit(): void {  
     this.paysVisites = this.paysVisitesService.getAllPaysVisites();
-    this.filteredPaysVisites$ = this.paysVisitesControl.valueChanges.pipe(
-      startWith(''),
-      map((value) => value ? this.filter(value) : this.paysVisites.slice())
-    )
+   
   }
 
   add(event: MatChipInputEvent): void {
@@ -73,12 +76,13 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
     // Add fruit only when MatAutocomplete is not open
     // To make sure this does not conflict with OptionSelected Event
     if (!this.matAutocomplete.isOpen) {
-      const input = event.input;
+      const input = event.input; //'input' is deprecated. Use `MatChipInputEvent#chipInput.inputElement` instead.
+      //const input = event.chipInput;
       const value = event.value;
 
     // Add our fruit
-    if (value) {
-      this.paysVisites.push({name: value});
+    if ((value || '').trim()) {
+      this.paysPlaceholder.push({name: value});
     }
 
     // Clear the input value
@@ -102,12 +106,12 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.paysPlaceholder.push(event.option.viewValue);
+    this.paysPlaceholder.push(event.option.value);
     this.paysVisitesInput.nativeElement.value = '';
     this.paysVisitesControl.setValue(null);
   }
 
-  filter(value: PaysVisites) {
+  filter(value: PaysVisites): PaysVisites[] {
     const filtervalue=value.name.toLowerCase();
     return this.paysVisites.filter(
       (element) => element.name.toLowerCase().indexOf(filtervalue) === 0
@@ -115,7 +119,6 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
   }
 
 }
-
 
 
 

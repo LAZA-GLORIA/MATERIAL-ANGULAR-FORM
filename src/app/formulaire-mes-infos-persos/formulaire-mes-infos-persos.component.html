@@ -78,18 +78,22 @@
                 <mat-chip 
                     *ngFor="let element of paysVisites" 
                     [value]="element.name" 
+                    [selectable]="selectable"
+                    [removable]="removable"
                     (removed)="remove(element)">
                         {{element.name}}
-                  <button matChipRemove>
+                  <!-- <button matChipRemove>
                     <mat-icon>cancel</mat-icon>
-                    </button>
+                    </button> -->
+
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+
                 </mat-chip>
 
                 <input
                 #paysVisitesInput
                 [matAutocomplete]="auto" 
                 [formControl]="paysVisitesControl"
-                matInput
                 [matChipInputFor]="chipList"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 [matChipInputAddOnBlur]="addOnBlur"
@@ -105,4 +109,3 @@
     </div>
 
 </form>
-
