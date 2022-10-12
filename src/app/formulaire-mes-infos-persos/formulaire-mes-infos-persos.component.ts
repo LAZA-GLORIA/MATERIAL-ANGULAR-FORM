@@ -32,8 +32,8 @@ export class FormulaireMesInfosPersosComponent {
   paysVisites: string[] = ["France", "Allemagne", "Pays-Bas", "Danemark", "Italie"];
   filteredPaysVisites$!: Observable<string[]>;
 
-  nirControl = new FormControl(null, [Validators.required, Validators.maxLength(8), methodeNirValidator()]);
-  CleNirControl = new FormControl(null, [Validators.required,Validators.maxLength(2), methodeCleNirValidator()]);
+  nirControl = new FormControl(null, [Validators.required, methodeNirValidator()]);
+  CleNirControl = new FormControl(null, [Validators.required, methodeCleNirValidator()]);
   emailControl = new FormControl(null, [Validators.required, Validators.email]);
   paysVisitesControl = new FormControl();
 
@@ -123,7 +123,6 @@ export class FormulaireMesInfosPersosComponent {
 
 {
   nirStrength: {
-    hasLength: true
     hasNumeric: false
   }
 }
@@ -139,10 +138,10 @@ function methodeNirValidator(): ValidatorFn {
     const value = control.value;
     if (!value) return null;
 
+    if(value.length > 8) return {nirStrength:true}
     const hasNumeric = /[1-97]+/.test(value);
-    const hasLength = /[value.length <= 8]+/.test(value);
 
-    const nirValide = hasNumeric && hasLength;
+    const nirValide = hasNumeric;
 
     return !nirValide ? {nirStrength:true}: null;
 
@@ -155,13 +154,21 @@ function methodeNirValidator(): ValidatorFn {
       if (!value) {
         return null;
       }
-     // const hasNumeriCle = /[97 - (this.hasNumeric)%97)]+/.test(value);
-     const hasNumeriCle = /[0-1]/.test(value);
-  
+
+      if(value.length > 2) return {cleNirStrength:true}
+      const hasNumeriCle = /[97 - (this.hasNumeric)%97)]+/.test(value);
+     //const hasNumeriCle = /[hasNumeriCle%2===0)]+/.test(value);
       const CleNirValide = hasNumeriCle;
   
       return !CleNirValide ? {cleNirStrength:true}: null;
   
     }
 }
+
+// function methodeCleNirValidator(): ValidatorFn {
+//   return (control:AbstractControl) : ValidationErrors | null => {
+//     const value = control.value;
+//     if(value.length >= 8) return {cleNirStrength:true};
+//   }
+// }
 

@@ -52,7 +52,7 @@
                 <input matInput type="text" [formControl]="CleNirControl">
 
                 <div class="field-message" *ngIf="CleNirControl.errors?.['cleNirStrength']">
-                    Votre cle est fausse
+                    Votre cle ne doit pas depasser 2 chiffre
                 </div>
             </mat-form-field>
            </div>
