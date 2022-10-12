@@ -29,8 +29,12 @@ form {
 .nir-email-container {
     display: flex;
   
-    .div-nir {
-        margin-right:  10rem;      
+    .container-nir {
+        margin-right:  10rem;  
+        .div-nir {
+            display: flex;
+            justify-content: space-between;
+        }    
     }
 
 }

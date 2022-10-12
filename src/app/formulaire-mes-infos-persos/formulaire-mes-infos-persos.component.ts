@@ -28,23 +28,20 @@ export class FormulaireMesInfosPersosComponent {
   removable = true;
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  paysPlaceholder: string[] = ["Espagne"];
+  paysPlaceholder: string[] = [];
   paysVisites: string[] = ["France", "Allemagne", "Pays-Bas", "Danemark", "Italie"];
   filteredPaysVisites$!: Observable<string[]>;
 
-  genreControl = new FormControl(null, [Validators.required]);
-  nomControl = new FormControl(null, [Validators.required]);
-  prenomControl = new FormControl(null, [Validators.required]);
-  nirControl = new FormControl(null, [Validators.required, Validators.pattern('[01-97]$')]);
   emailControl = new FormControl(null, [Validators.required, Validators.email]);
   paysVisitesControl = new FormControl();
 
   //userForm
-  options = this.formBuilder.group({
-      genre: this.genreControl,
-      nom: this.nomControl,
-      prenom: this.prenomControl,
-      nir: this.nirControl,
+  userForm = this.formBuilder.group({
+      genre: [null, [Validators.required]],
+      nom: [null, [Validators.required]],
+      prenom: [null, [Validators.required]],
+      nir: [null, [Validators.required]],
+      cleNir: [null, [Validators.required]],
       email: this.emailControl,
       paysVisites: this.paysVisitesControl
   });
