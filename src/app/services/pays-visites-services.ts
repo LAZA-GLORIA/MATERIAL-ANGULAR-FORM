@@ -7,20 +7,7 @@ import { PaysVisites } from "../models/pays-vistes.model";
 
 export class PaysVisitesService {
 
-  paysVisites: PaysVisites[] = [
-    {
-    //  id: 1,
-      name:"France"
-    },
-    {
-     // id: 2,
-      name:"Allemagne"
-    },
-    {
-     // id: 3,
-      name:"Pays-Bas"
-    }     
-    ]; 
+  paysVisites: string[] = ["France", "Allemagne", "Pays-Bas"]; 
 
 
     // paysVisites: PaysVisites[] = [

@@ -60,32 +60,17 @@
 
     <div class="pays-visites-container">
         <p> Pays visités </p>
-    <mat-form-field appearance="fill" [color]="paysVisitesControl.value">
-        <!-- <input type="text"
-        placeholder="Selectionnez le pays"
-        aria-label="Pays"
-        matInput
-        type="text"
-        [formControl]="paysVisitesControl"
-        [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let element of paysVisites" [value]="element.name">
-                    {{element.name}}
-                </mat-option>
-            </mat-autocomplete> -->
 
+    <mat-form-field>
             <mat-chip-list #chipList aria-label="Pays visités">
                 <mat-chip 
-                    *ngFor="let element of paysVisites" 
-                    [value]="element.name" 
+                    *ngFor="let element of paysPlaceholder" 
+                    [value]="element" 
                     [selectable]="selectable"
                     [removable]="removable"
                     (removed)="remove(element)">
-                        {{element.name}}
-                  <!-- <button matChipRemove>
-                    <mat-icon>cancel</mat-icon>
-                    </button> -->
-
+                        {{element}}
+        
                     <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
 
                 </mat-chip>
@@ -100,8 +85,8 @@
                 (matChipInputTokenEnd)="add($event)">
        </mat-chip-list>
        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-        <mat-option *ngFor="let element of filteredPaysVisites$ | async" [value]="element.name">
-            {{ element.name }}
+        <mat-option *ngFor="let element of filteredPaysVisites$ | async" [value]="element">
+            {{ element }}
 
         </mat-option>
        </mat-autocomplete>

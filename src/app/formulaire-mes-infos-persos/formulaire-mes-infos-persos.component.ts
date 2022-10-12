@@ -3,8 +3,6 @@ import { FormBuilder, FormControl, FormGroupDirective, NgForm, Validators } from
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ErrorStateMatcher } from '@angular/material/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { PaysVisites } from '../models/pays-vistes.model';
-import { PaysVisitesService } from '../services/pays-visites-services';
 import { map, Observable, startWith } from 'rxjs';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
@@ -22,17 +20,17 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './formulaire-mes-infos-persos.component.html',
   styleUrls: ['./formulaire-mes-infos-persos.component.scss']
 })
-export class FormulaireMesInfosPersosComponent implements OnInit{
+export class FormulaireMesInfosPersosComponent {
   //formulaireInfosPersos!: FormGroup;
 
   visible = true;
   selectable = true;
   removable = true;
   addOnBlur = true;
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  paysPlaceholder: PaysVisites[] = [];
-  paysVisites: PaysVisites[] = [];
-  filteredPaysVisites$!: Observable<PaysVisites[]>;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  paysPlaceholder: string[] = ["Espagne"];
+  paysVisites: string[] = ["France", "Allemagne", "Pays-Bas", "Danemark", "Italie"];
+  filteredPaysVisites$!: Observable<string[]>;
 
   genreControl = new FormControl(null, [Validators.required]);
   nomControl = new FormControl(null, [Validators.required]);
@@ -57,18 +55,18 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
   paysVisitesInput!: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete!: MatAutocomplete;
 
-  constructor(private formBuilder: FormBuilder, private paysVisitesService: PaysVisitesService) { 
+  constructor(private formBuilder: FormBuilder) { 
     this.filteredPaysVisites$ = this.paysVisitesControl.valueChanges.pipe(
       startWith(''),
-      map((value: PaysVisites) => value ? this.filter(value) : this.paysVisites.slice())
+      map((value: string) => value ? this.__filter(value) : this.paysVisites.slice())
       //map((value) => value ? this.filter(value) : this.paysVisites.slice())
     );
   }
 
-  ngOnInit(): void {  
-    this.paysVisites = this.paysVisitesService.getAllPaysVisites();
+  // ngOnInit(): void {  
+  //   this.paysVisites = this.paysVisitesService.getAllPaysVisites();
    
-  }
+  // }
 
   add(event: MatChipInputEvent): void {
     //const value = (event.value || '').trim();
@@ -82,7 +80,7 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
 
     // Add our fruit
     if ((value || '').trim()) {
-      this.paysPlaceholder.push({name: value});
+      this.paysPlaceholder.push(value.trim());
     }
 
     // Clear the input value
@@ -97,7 +95,7 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
   }
 }
 
-  remove(element: PaysVisites): void {
+  remove(element: string): void {
     const index = this.paysPlaceholder.indexOf(element);
 
     if (index >= 0) {
@@ -106,15 +104,15 @@ export class FormulaireMesInfosPersosComponent implements OnInit{
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.paysPlaceholder.push(event.option.value);
+    this.paysPlaceholder.push(event.option.viewValue);
     this.paysVisitesInput.nativeElement.value = '';
     this.paysVisitesControl.setValue(null);
   }
 
-  filter(value: PaysVisites): PaysVisites[] {
-    const filtervalue=value.name.toLowerCase();
+  private __filter(value: string): string[] {
+    const filtervalue=value.toLowerCase();
     return this.paysVisites.filter(
-      (element) => element.name.toLowerCase().indexOf(filtervalue) === 0
+      (element) => element.toLowerCase().indexOf(filtervalue) === 0
       );
   }
 
