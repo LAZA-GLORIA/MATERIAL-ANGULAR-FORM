@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-formulaire-ajouter-enfants',
@@ -9,31 +9,24 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export class FormulaireAjouterEnfantsComponent {
   //formulaireAjouterEnfants!: FormGroup;
 
-  genreControl = new FormControl("Genre");
-  nomControl = new FormControl();
-  prenomControl = new FormControl();
+  // genreControl = new FormControl("Genre");
+  // nomControl = new FormControl();
+  // prenomControl = new FormControl();
 
-  options = this.formBuilder.group({
-      genre: this.genreControl,
-      nom: this.nomControl,
-      prenom: this.prenomControl,
+  childUserForm = this.formBuilder.group({
+      genre: [null, [Validators.required]],
+      nom: [null, [Validators.required]],
+      prenom: [null, [Validators.required]],
   });
 
   constructor(private formBuilder: FormBuilder) { }
 
+
+
   onSupprimerEnfant(){
     console.log("hello");
   }
-  // ngOnInit(): void {
-  //   this.formulaireAjouterEnfants = this.formBuilder.group({
-  //     genre: [null],
-  //     nom: [null],
-  //     prenom: [null]
-  //   });
-  // }
 
-  // onSubmitForm(): void {
-  //   console.log(this.formulaireAjouterEnfants.value)
-  // }
+
 
 }

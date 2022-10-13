@@ -1,4 +1,4 @@
-<form [formGroup]="options">
+<form [formGroup]="childUserForm">
     
         <div class="titre-ajout-enfant">
             <h2> Enfants </h2> 
@@ -8,9 +8,9 @@
     <div class="ajout-enfant-container">
         <div class="div-ajout-genre-enfant">
             <p> Genre </p>
-            <mat-form-field appearance="fill" [color]="genreControl.value">
+            <mat-form-field appearance="fill">
                 <mat-label>Genre</mat-label>
-                <mat-select [formControl]="genreControl">
+                <mat-select>
                     <mat-option value="homme">Homme</mat-option>
                     <mat-option value="femme">Femme</mat-option>
                   </mat-select>
