@@ -39,21 +39,24 @@
             <mat-form-field appearance="fill">
                 <mat-label>NIR</mat-label>
                 <input matInput type="text" [formControl]="nirControl">
-
-                <div class="field-message" *ngIf="nirControl.errors?.['nirStrength']">
-                    Your password must have lower case, upper case and numeric characters.
-                </div>
+                 <mat-hint aling="end" class="field-message" *ngIf="nirControl.errors?.['nirStrength']">
+                Votre numéro ne doit pas commencer par un zéro.      
+                 </mat-hint>
             </mat-form-field>
+           
            </div>
 
            <div div="cle-nir">
             <mat-form-field appearance="fill">
                 <mat-label>clé</mat-label>
-                <input matInput type="text" [formControl]="CleNirControl">
+                <input matInput type="text" [formControl]="cleNirControl">
 
-                <div class="field-message" *ngIf="CleNirControl.errors?.['cleNirStrength']">
-                    Votre cle ne doit pas depasser 2 chiffre
-                </div>
+                <!-- <mat-hint aling="end" class="field-message" *ngIf="CleNirControl.errors?.['cleNirInvalide']">
+                    Votre cle ne doit pas depasser 2 chiffres
+                </mat-hint> -->
+                <mat-hint aling="end" class="field-message" *ngIf="cleNirControl.errors?.['cleNirInvalide']">
+                   Cle nir<strong>invalide</strong>
+                  </mat-hint>
             </mat-form-field>
            </div>
         </div>

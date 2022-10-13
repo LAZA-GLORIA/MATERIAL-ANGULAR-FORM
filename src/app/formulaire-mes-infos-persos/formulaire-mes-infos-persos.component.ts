@@ -32,8 +32,8 @@ export class FormulaireMesInfosPersosComponent {
   paysVisites: string[] = ["France", "Allemagne", "Pays-Bas", "Danemark", "Italie"];
   filteredPaysVisites$!: Observable<string[]>;
 
-  nirControl = new FormControl(null, [Validators.required, methodeNirValidator()]);
-  CleNirControl = new FormControl(null, [Validators.required, methodeCleNirValidator()]);
+  nirControl = new FormControl(null, [Validators.required,methodeNirValidator()]);
+  cleNirControl = new FormControl(null, [Validators.required]);
   emailControl = new FormControl(null, [Validators.required, Validators.email]);
   paysVisitesControl = new FormControl();
 
@@ -45,9 +45,12 @@ export class FormulaireMesInfosPersosComponent {
       //nir: [null, [Validators.required, methodeNirValidator()]],
       nir: this.nirControl,
       //cleNir: [null, [Validators.required]],
-      cleNir: this.CleNirControl,
+      cleNir: this.cleNirControl,
       email: this.emailControl,
       paysVisites: this.paysVisitesControl
+  }, 
+  {
+    validators: [ methodeCleNirValidator()]
   });
 
   matcher = new MyErrorStateMatcher();
@@ -128,8 +131,10 @@ export class FormulaireMesInfosPersosComponent {
 }
 
 {
-  cleNirStrength: {
-    hasNumeriCle: false
+  cleNirInvalide: {
+    hasclenir: true
+    hasnir: true
+    hasfinale: false
   }
 }
 
@@ -138,32 +143,56 @@ function methodeNirValidator(): ValidatorFn {
     const value = control.value;
     if (!value) return null;
 
-    if(value.length > 8) return {nirStrength:true}
-    const hasNumeric = /[1-97]+/.test(value);
+    if(value.length > 13) return {nirStrength:true}
+    const hasNumeric = /[1-97]/.test(value);
 
     const nirValide = hasNumeric;
+    console.log(hasNumeric);
 
     return !nirValide ? {nirStrength:true}: null;
 
   }
 }
 
-  function methodeCleNirValidator(): ValidatorFn {
-    return (control:AbstractControl) : ValidationErrors | null => {
-      const value = control.value;
-      if (!value) {
-        return null;
-      }
+function methodeCleNirValidator(): ValidatorFn {
+  return (control:AbstractControl) : ValidationErrors | null => {
+  const nirControl = parseInt(control.get('nir')?.value);
+  const cleNirControl = control.get('cleNir')?.value;
 
-      if(value.length > 2) return {cleNirStrength:true}
-      const hasNumeriCle = /[97 - (this.hasNumeric)%97)]+/.test(value);
-     //const hasNumeriCle = /[hasNumeriCle%2===0)]+/.test(value);
-      const CleNirValide = hasNumeriCle;
-  
-      return !CleNirValide ? {cleNirStrength:true}: null;
-  
-    }
+  const newCleNir = (97 - (nirControl%97));
+ 
+  const hasclenir = /[newCleNir]/.test(control.value);
+  const hasnir = /[nirControl]/.test(control.value);
+
+
+  console.log(`MODULO: ${hasclenir} - VALEUR: ${newCleNir}`);
+  console.log(`NIR: ${hasnir} - VALEUR: ${nirControl}`);
+
+  console.log(`VALEUR CLE NIR: ${cleNirControl}`);
+
+  const hasfinale = hasclenir && hasnir;
+
+  return hasfinale ? null : { cleNirInvalide: true };
+ // return nirControl && CleNirControl && nirControl.value === CleNirControl.value ? { identityRevealed: true } : null;
 }
+}
+
+//   function methodeCleNirValidator(): ValidatorFn {
+//     return (control:AbstractControl) : ValidationErrors | null => {
+//       const value = control.value;
+//       if (!value) {
+//         return null;
+//       }
+
+//       if(value.length > 2) return {cleNirStrength:true}
+//       const hasNumeriCle = /[97 - (this.nirValide)%97)]+/.test(value);
+//       //const hasNumeriCle = /[hasNumeric]+/.test(value);
+//       const CleNirValide = hasNumeriCle;
+  
+//       return !CleNirValide ? {cleNirStrength:true}: null;
+  
+//     }
+// }
 
 // function methodeCleNirValidator(): ValidatorFn {
 //   return (control:AbstractControl) : ValidationErrors | null => {
