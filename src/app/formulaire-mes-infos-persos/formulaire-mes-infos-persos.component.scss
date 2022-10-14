@@ -1,52 +1,42 @@
-
-    h2 {
-        padding-left: 2rem;
-        padding-top: 5rem;
-        padding-bottom: 2rem;
-    }
+h2 {
+  padding-left: 2rem;
+  padding-top: 5rem;
+  padding-bottom: 2rem;
+}
 
 form {
-    padding-left: 6rem;
+  padding-left: 6rem;
 
-    mat-form-field {
-        padding: 0 0 0 0;
-    }
+  mat-form-field {
+    padding: 0 0 0 0;
+  }
 
-.genre-nom-prenom-container {
+  .genre-nom-prenom-container {
     display: flex;
 
     .div-genre {
-        margin-right:  5rem;  
-            
+      margin-right: 5rem;
     }
 
     .div-nom {
-        margin-right:  5rem;      
+      margin-right: 5rem;
     }
+  }
 
-}
-
-.nir-email-container {
+  .nir-email-container {
     display: flex;
-  
     .container-nir {
-        margin-right:  10rem;  
-        display: flex;
-        align-items: flex-end;
-        .div-nir {
-            margin-right: 1rem;
-        } 
-        .div-clenir {
-            width: 2rem;
-        }   
+      margin-right: 10rem;
+      display: flex;
+      align-items: flex-end;
+      .div-nir {
+        margin-right: 1rem;
+      }
+      .div-clenir {
+        width: 2rem;
+      }
     }
-
+  }
+  .pays-visites-container {
+  }
 }
-.pays-visites-container {
-
-
-}
-    
-} 
-
-

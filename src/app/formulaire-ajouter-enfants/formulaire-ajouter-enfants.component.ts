@@ -8,7 +8,11 @@ import { FormArray, FormBuilder, Validators } from '@angular/forms';
 })
 export class FormulaireAjouterEnfantsComponent {
   childUserForm = this.fb.group({
+    genre: [null, [Validators.required]],
+      nom: [null, [Validators.required]],
+      prenom: [null, [Validators.required]],
     children: this.fb.array([])
+    // children= new FormArray([])
   });
 
   constructor(private fb: FormBuilder) {}
@@ -22,10 +26,10 @@ export class FormulaireAjouterEnfantsComponent {
   }
 
   addChildren() {
-    const childrenForm = this.fb.group({
-      genre: [null, Validators.required],
-      nom: [null, Validators.required],
-      prenom: [null, Validators.required]
+     const childrenForm = this.fb.group({
+      genre: [null, [Validators.required]],
+      nom: [null, [Validators.required]],
+      prenom: [null, [Validators.required]]
     });
 
     this.apichildren.push(childrenForm);

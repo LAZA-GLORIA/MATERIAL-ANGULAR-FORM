@@ -5,13 +5,10 @@
       Ajouter un enfant
     </button>
   </div>
-  
+
   <div>
-    
-    <ng-container formArrayName="apichildren">
-      <ng-container
-        *ngFor="let item of apichildren.controls; let i = index"
-      >
+    <ng-container formArrayName="children">
+      <ng-container *ngFor="let item of apichildren.controls; let i = index">
         <div class="ajout-enfant-container">
           <div class="div-ajout-genre-enfant">
             <p>Genre</p>
@@ -22,13 +19,22 @@
                 <mat-option value="femme">Femme</mat-option>
               </mat-select>
             </mat-form-field>
+            <!-- <p> {{childUserForm.genre}} </p> -->
           </div>
 
           <div class="div-ajout-nom-enfant">
             <p>Nom</p>
             <mat-form-field appearance="fill">
               <mat-label>Nom</mat-label>
-              <input matInput formControlName="nom" />
+              <input matInput type="text" #input formControlName="nom" />
+              <!-- <mat-hint
+            class="field-message"
+            *ngIf="childUserForm.errors?.['required']"
+          >{{ childUserForm.controls.nom.value || 0 }}/50 </mat-hint> -->
+
+              <!-- <mat-hint align="end" *ngIf="childUserForm.controls.nom.addValidators.required"
+            >Caractères restants {{ childUserForm.controls.nom.addValidators.length || 0 }}/50</mat-hint
+          > -->
             </mat-form-field>
           </div>
 
@@ -49,21 +55,8 @@
       </ng-container>
     </ng-container>
   </div>
+  <button mat-flat-button color="warn" type="submit">
+    <mat-icon matSuffix>submit</mat-icon>Entrer
+  </button>
 </form>
 
-<!-- <div>
-    <form [formGroup]="formulaireAjouterEnfants">
-    <div>
-        <h2> Enfants </h2>
-        <button type="submit" (click)="onSubmitForm()"> Ajouter un enfant </button>
-    </div>
-        <div>
-            <label for="nom">Nom</label>
-            <input type="text" id="nom" formControlName="nom">
-        </div>
-        <div>
-            <label for="prenom">Prénom</label>
-            <input type="text" id="prenom" formControlName="prenom">
-        </div>
-    </form>
-</div> -->
