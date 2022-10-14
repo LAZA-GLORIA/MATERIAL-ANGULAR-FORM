@@ -1,32 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-formulaire-ajouter-enfants',
   templateUrl: './formulaire-ajouter-enfants.component.html',
-  styleUrls: ['./formulaire-ajouter-enfants.component.scss']
+  styleUrls: ['./formulaire-ajouter-enfants.component.scss'],
 })
 export class FormulaireAjouterEnfantsComponent {
-  //formulaireAjouterEnfants!: FormGroup;
-
-  // genreControl = new FormControl("Genre");
-  // nomControl = new FormControl();
-  // prenomControl = new FormControl();
-
-  childUserForm = this.formBuilder.group({
-      genre: [null, [Validators.required]],
-      nom: [null, [Validators.required]],
-      prenom: [null, [Validators.required]],
+  childUserForm = this.fb.group({
+    children: this.fb.array([])
   });
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private fb: FormBuilder) {}
 
-
-
-  onSupprimerEnfant(){
-    console.log("hello");
+  onSupprimerEnfant(childrenIndex: number) {
+    this.apichildren.removeAt(childrenIndex);
   }
 
+  get apichildren() {
+    return this.childUserForm.controls["children"] as FormArray;
+  }
 
+  addChildren() {
+    const childrenForm = this.fb.group({
+      genre: [null, Validators.required],
+      nom: [null, Validators.required],
+      prenom: [null, Validators.required]
+    });
 
+    this.apichildren.push(childrenForm);
+  }
+
+  ProceedSave(){
+    console.log(this.childUserForm.value);
+  }
 }

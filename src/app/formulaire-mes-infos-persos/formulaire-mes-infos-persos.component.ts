@@ -156,24 +156,27 @@ function methodeNirValidator(): ValidatorFn {
 
 function methodeCleNirValidator(): ValidatorFn {
   return (control:AbstractControl) : ValidationErrors | null => {
-  const nirControl = parseInt(control.get('nir')?.value);
-  const cleNirControl = control.get('cleNir')?.value;
+  const nirControl: number = parseInt(control.get('nir')?.value);
+  const cleNirControl: number = control.get('cleNir')?.value;
+  //const cleNirControlString: string = control.get('cleNir')?.value;
 
-  const newCleNir = (97 - (nirControl%97));
+  const newCleNir: number = (97 - (nirControl%97));
+
+ // if (cleNirControlString.length > 2) return { identityRevealed: true };
  
-  const hasclenir = /[newCleNir]/.test(control.value);
-  const hasnir = /[nirControl]/.test(control.value);
+  // const hasclenir = /[$newCleNir]/.test(control.value);
+  // const hasnir = /[$nirControl]/.test(control.value);
 
 
-  console.log(`MODULO: ${hasclenir} - VALEUR: ${newCleNir}`);
-  console.log(`NIR: ${hasnir} - VALEUR: ${nirControl}`);
+  // console.log(`MODULO: ${hasclenir} - VALEUR: ${newCleNir}`);
+  // console.log(`NIR: ${hasnir} - VALEUR: ${nirControl}`);
 
   console.log(`VALEUR CLE NIR: ${cleNirControl}`);
 
-  const hasfinale = hasclenir && hasnir;
+  // const hasfinale = hasclenir && hasnir;
 
-  return hasfinale ? null : { cleNirInvalide: true };
- // return nirControl && CleNirControl && nirControl.value === CleNirControl.value ? { identityRevealed: true } : null;
+  //return hasfinale ? null : { cleNirInvalide: true };
+ return cleNirControl === nirControl ? null : { identityRevealed: true };
 }
 }
 
