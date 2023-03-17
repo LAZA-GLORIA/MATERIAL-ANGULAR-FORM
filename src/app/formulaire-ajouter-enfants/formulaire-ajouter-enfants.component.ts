@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormArray, FormBuilder, Validators } from '@angular/forms';
   templateUrl: './formulaire-ajouter-enfants.component.html',
   styleUrls: ['./formulaire-ajouter-enfants.component.scss'],
 })
-export class FormulaireAjouterEnfantsComponent {
+export class FormulaireAjouterEnfantsComponent implements OnInit{
   childUserForm = this.fb.group({
     genre: [null, [Validators.required]],
       nom: [null, [Validators.required]],
@@ -16,6 +16,9 @@ export class FormulaireAjouterEnfantsComponent {
   });
 
   constructor(private fb: FormBuilder) {}
+  ngOnInit(): void {
+    this.addChildren();
+  }
 
   onSupprimerEnfant(childrenIndex: number) {
     this.apichildren.removeAt(childrenIndex);
