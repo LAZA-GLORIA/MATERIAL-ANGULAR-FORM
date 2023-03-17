@@ -1,0 +1,144 @@
+<h2>Mes infos persos</h2>
+<form [formGroup]="userForm">
+  <div class="genre-nom-prenom-container">
+    <div class="div-genre">
+      <p>Genre</p>
+      <mat-form-field class="mat-form-field" appearance="fill">
+        <mat-label>Genre</mat-label>
+        <mat-select>
+          <mat-option value="homme">Homme</mat-option>
+          <mat-option value="femme">Femme</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="div-nom">
+      <p>Nom</p>
+      <mat-form-field class="mat-form-field" appearance="fill">
+        <mat-label>Nom</mat-label>
+        <input matInput type="text" />
+        <mat-hint align="end"
+          >Caractères restants {{ input.value.length || 0 }}/50</mat-hint
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="div-prenom">
+      <p>Prénom</p>
+      <mat-form-field class="mat-form-field" appearance="fill">
+        <mat-label>Prénom</mat-label>
+        <input matInput type="text" />
+        <mat-hint align="end"
+          >Caractères restants {{ input.value.length || 0 }}/50</mat-hint
+        >
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="nir-email-container">
+    <p>NIR</p>
+    <div class="container-nir">
+      <div class="div-nir">
+        <mat-form-field appearance="fill">
+          <mat-label>NIR</mat-label>
+          <input matInput type="text" [formControl]="nirControl" />
+          <mat-hint
+            class="field-message"
+            *ngIf="nirControl.errors?.['nirStrength']"
+          >
+            <mat-error>
+              Votre numéro ne doit pas commencer par un zéro.
+            </mat-error>
+          </mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div div="cle-nir">
+        <mat-form-field appearance="fill">
+          <mat-label>clé</mat-label>
+          <input matInput type="text" [formControl]="cleNirControl" />
+
+          <!-- <mat-hint aling="end" class="field-message" *ngIf="CleNirControl.errors?.['cleNirInvalide']">
+                    Votre cle ne doit pas depasser 2 chiffres
+                </mat-hint> -->
+          <mat-hint
+            aling="end"
+            class="field-message"
+            *ngIf="cleNirControl.errors?.['cleNirInvalide']"
+          >
+            Cle nir<strong>invalide</strong>
+          </mat-hint>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="div-email">
+      <p>Adresse mail</p>
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          #input
+          maxlength="20"
+          width="150"
+          [formControl]="emailControl"
+          [errorStateMatcher]="matcher"
+          placeholder="Ex. pat@example.com"
+        />
+        <!-- <mat-hint>Email valide exigé!</mat-hint> -->
+        <mat-error
+          *ngIf="
+            emailControl.hasError('email') && !emailControl.hasError('required')
+          "
+        >
+          Adresse email valide exigé!
+        </mat-error>
+        <mat-error *ngIf="emailControl.hasError('required')">
+          Adresse email <strong>obligatoire</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="pays-visites-container">
+    <p>Pays visités</p>
+
+    <mat-form-field>
+      <mat-chip-list #chipList aria-label="Pays visités">
+        <mat-chip
+          *ngFor="let element of paysPlaceholder"
+          [value]="element"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(element)"
+        >
+          {{ element }}
+
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+
+        <input
+          #paysVisitesInput
+          [matAutocomplete]="auto"
+          [formControl]="paysVisitesControl"
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur"
+          (matChipInputTokenEnd)="add($event)"
+        />
+      </mat-chip-list>
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="selected($event)"
+      >
+        <mat-option
+          *ngFor="let element of filteredPaysVisites$ | async"
+          [value]="element"
+        >
+          {{ element }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</form>

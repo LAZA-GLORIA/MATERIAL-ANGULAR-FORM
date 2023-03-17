@@ -1,0 +1,62 @@
+<form [formGroup]="childUserForm" (ngSubmit)="ProceedSave()">
+  <div class="titre-ajout-enfant">
+    <h2>Enfants</h2>
+    <button mat-flat-button color="primary" (click)="addChildren()">
+      Ajouter un enfant
+    </button>
+  </div>
+
+  <div>
+    <ng-container formArrayName="children">
+      <ng-container *ngFor="let item of apichildren.controls; let i = index">
+        <div class="ajout-enfant-container">
+          <div class="div-ajout-genre-enfant">
+            <p>Genre</p>
+            <mat-form-field appearance="fill">
+              <mat-label>Genre</mat-label>
+              <mat-select formControlName="genre">
+                <mat-option value="homme">Homme</mat-option>
+                <mat-option value="femme">Femme</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <!-- <p> {{childUserForm.genre}} </p> -->
+          </div>
+
+          <div class="div-ajout-nom-enfant">
+            <p>Nom</p>
+            <mat-form-field appearance="fill">
+              <mat-label>Nom</mat-label>
+              <input matInput type="text" #input formControlName="nom" />
+              <!-- <mat-hint
+            class="field-message"
+            *ngIf="childUserForm.errors?.['required']"
+          >{{ childUserForm.controls.nom.value || 0 }}/50 </mat-hint> -->
+
+              <!-- <mat-hint align="end" *ngIf="childUserForm.controls.nom.addValidators.required"
+            >Caractères restants {{ childUserForm.controls.nom.addValidators.length || 0 }}/50</mat-hint
+          > -->
+            </mat-form-field>
+          </div>
+
+          <div class="div-ajout-prenom-enfant">
+            <p>Prénom</p>
+            <mat-form-field appearance="fill">
+              <mat-label>Prénom</mat-label>
+              <input matInput formControlName="prenom" />
+            </mat-form-field>
+          </div>
+
+          <div class="div-button-supprimer-enfant">
+            <button mat-flat-button color="warn" (click)="onSupprimerEnfant(i)">
+              <mat-icon matSuffix>delete</mat-icon>Supprimer
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+  <button mat-flat-button color="warn" type="submit">
+    <mat-icon matSuffix>submit</mat-icon>Entrer
+  </button>
+</form>
+

@@ -1,0 +1,28 @@
+form {
+  padding-top: 3rem;
+
+  .titre-ajout-enfant {
+    display: flex;
+    padding-left: 2rem;
+    align-items: self-start;
+    padding-bottom: 2rem;
+    h2 {
+      margin-right: 5rem;
+    }
+  }
+  
+  .ajout-enfant-container {
+      display: flex;
+      width: 15rem;
+      align-items: center;
+      padding-left: 5rem;
+  
+      .div-ajout-genre-enfant, .div-ajout-nom-enfant, .div-ajout-prenom-enfant {
+        margin-right: 5rem;
+      }
+  
+      .div-button-supprimer-enfant {
+        margin-top: 0.5rem;
+      }
+    }
+}
